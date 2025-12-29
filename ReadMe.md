@@ -1,6 +1,6 @@
 # Bayesian A/B 테스팅 (Monte Carlo 예제)
 
-이 저장소는 **이진 전환율 데이터(binary outcome)**를 대상으로 한  
+이 저장소는 **이진 전환율 데이터**(binary outcome)를 대상으로 한  
 **Bayesian A/B 테스트 최소 예제**입니다.
 
 특징:
@@ -13,12 +13,14 @@
 
 ## 프로젝트 구조
 
+```bash
 mcbayesian/
 │
 ├── 1_createData.py # 데이터 생성 및 CSV 저장
 ├── 2_analyze.py # CSV 불러와 Bayesian 분석
 ├── conversion_data_2025_08_09.csv
 └── README.md
+```
 
 ---
 
@@ -46,6 +48,7 @@ python 1_createData.py
 
 ```yaml
 Saved file: conversion_data_2025_08_09.csv
+
                   count  sum   mean
 month   group
 2025-08 baseline   1000   95  0.095
@@ -54,12 +57,12 @@ month   group
 ```
 
 ```yaml
-month,group,y
-2025-08,baseline,0
-2025-08,baseline,1
+month   group       y
+2025-08 baseline    0
+2025-08 baseline    1
 ...
-2025-09,A,0
-2025-09,B,1
+2025-09 A           0
+2025-09 B           1
 ```
 
 ### 2단계. Bayesian 분석 (2_analyze.py)
@@ -79,15 +82,18 @@ python 2_analyze.py
 #### 실행 결과
 
 ```yaml
-코드 복사
+
 aug_empirical_rate: 0.095
 prior_beta: (20.0, 182.0)
 sep_counts: {'A': {'success': 53, 'n': 500}, 'B': {'success': 59, 'n': 500}}
+
 posterior_mean_A: 0.10396026966369441
 posterior_mean_B: 0.11251221071471183
+
 P(B > A | data): 0.69829
 uplift_mean: 0.00855194105101742
 uplift_95_CI: (-0.0238, 0.0411)
+
 ```
 
 #### 결과 해석
@@ -100,9 +106,9 @@ uplift_95_CI: (-0.0238, 0.0411)
 - 전환율 차이에 대한 95% 신뢰구간(credible interval):
     - 0을 포함 → 효과의 불확실성 존재
 
-결론:
-- B가 더 나을 가능성은 있으나
-- 정책 또는 서비스 전면 도입을 결정하기에는 아직 근거가 충분하지 않음
+- 결론:
+    - B가 더 나을 가능성은 있으나
+    - 정책 또는 서비스 전면 도입을 결정하기에는 아직 근거가 충분하지 않음
 
 ### 핵심 요약
 - 8월 데이터는 기존 정보(prior)로 사용
